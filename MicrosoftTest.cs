@@ -8,7 +8,7 @@ public class MicrosoftTest : BaseTest
     [SetUp]
     public void InitLogger()
     {
-        logger = new TestLogger(nameof(MicrosoftTest));
+        logger = new TestLogger(GetType().Name);
         logger.Log("Microsoft's Test is starting.");
     }
 

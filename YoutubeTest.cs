@@ -8,7 +8,7 @@ public class YouTubeTest : BaseTest
     [SetUp]
     public void InitLogger()
     {
-        logger = new TestLogger(nameof(MicrosoftTest));
+        logger = new TestLogger(GetType().Name);
         logger.Log("Youtube's Test is starting.");
     }
 
