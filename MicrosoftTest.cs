@@ -3,11 +3,27 @@ using SeleniumGridTest;
 [TestFixture, Parallelizable(ParallelScope.Self)]
 public class MicrosoftTest : BaseTest
 {
+    private TestLogger? logger;
+
+    [SetUp]
+    public void InitLogger()
+    {
+        logger = new TestLogger(nameof(MicrosoftTest));
+        logger.Log("Microsoft's Test is starting.");
+    }
+
     [Test]
     public void VisitMicrosoft()
     {
         driver!.Navigate().GoToUrl("https://www.microsoft.com");
-        Console.WriteLine($"Title: {driver.Title}");
-        Thread.Sleep(20000); // 20 sec
+        logger!.Log("Webpage title is: " + driver.Title);
+        Thread.Sleep(20000);
+    }
+
+    [TearDown]
+    public new void TearDown()
+    {
+        logger!.Log("Microsoft's Test is closing.");
+        base.TearDown();
     }
 }
