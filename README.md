@@ -8,17 +8,7 @@
 > dotnet --version                                  # VERSION : 8.0.410
 ```
 
-### 1.2 CREATE PROJECT
-```bash
-> dotnet new list                                   # list available project templates
-> dotnet new console -n SeleniumGridTests           # create project
-> cd SeleniumGridTests
-```
-
-
-## 2. IMPLEMENT
-
-### 2.0 Base Class Library (BCL) & .NET runtime
+### 1.2 Base Class Library (BCL) & .NET runtime
 
 > REFERENCE: https://learn.microsoft.com/en-us/dotnet/api/
 
@@ -57,41 +47,22 @@
 
 ```
 
-> PERFORMANCE :
+### 1.3 Install NuGet PACKAGES & NAMESPACE
+
+> NuGet repository : https://www.nuget.org/
 
 ```bash
-# 1. TRACE PERFORMANCE : 
-> dotnet tool install --global dotnet-trace
-> dotnet-trace collect -p <PID> --duration 00:00:10 --format speedscope
+> dotnet list package                           # list currently installed packages
 
-# Visualize results in :
-# [A] https://www.speedscope.app/ or 
-# [B] Google Chrome's --->  chrome://tracing
+> dotnet search <package-name>                  # search for a package by name
+> dotnet search Selenium                        # search Selenium.WebDriver package
 
+> dotnet add package <package-name>             # install NuGet package
 
-# 2. ANALYZE .NET DUMPS :
-dotnet tool install --global dotnet-symbol
-dotnet-symbol --symbols --modules --debugging <dump-file-path>
-
-# Analyze .NET dumps with : 
-# [A] lldb or dotnet-dump
-# [B] https://learn.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-symbol
-```
-
-### 2.1 NuGet PACKAGES & NAMESPACE
-
-> NuGet repository : 
-
-```bash
-> dotnet list package
-> dotnet search <package-name>
-> dotnet search Selenium
-
-> dotnet add package <package-name>
 > dotnet add package Selenium.WebDriver
     > using OpenQA.Selenium.Chrome;             # Chrome, Firefox, Edge
     > using OpenQA.Selenium.Support.UI;         # WebDriver support classes (e.g.: WebDriverWait, SelectElement)
-> dotnet add package ???
+> dotnet add package NUnit
     > using NUnit.Framework; 
 
 > dotnet remove package <package-name>
@@ -116,6 +87,34 @@ Selenium.WebDriver
 
 > using Selenium.WebDriver.ChromeDriver
 > using Selenium.Support.Expected
+```
+
+
+## 2. IMPLEMENT
+
+### 2.1 CREATE PROJECT
+```bash
+/MySolution
+│
+├── MySolution.sln                  # Solution file
+│
+├── /MyApp                         # Class library project
+│   ├── MyApp.csproj
+│   └── Calculator.cs              # Example class
+│
+├── /MyApp.Tests                   # NUnit test project
+│   ├── MyApp.Tests.csproj
+│   ├── CalculatorTests.cs         # NUnit test class
+│   └── TestHelpers.cs             # Optional: shared test utilities
+```
+
+
+```bash
+> dotnet new list                                   # list available project templates
+> dotnet new console -n SeleniumGridTests           # create project
+> cd SeleniumGridTests
+
+> dotnet new sln -n MySolution
 ```
 
 ### 2.1 PROJECT NAMESPACE
@@ -188,4 +187,28 @@ Selenium.WebDriver
 
 # run specific test
 > dotnet test --filter <TestName>       # VisitCanada
+```
+
+
+## 4. PERFORMANCE
+
+> PERFORMANCE :
+
+```bash
+# 1. TRACE PERFORMANCE : 
+> dotnet tool install --global dotnet-trace
+> dotnet-trace collect -p <PID> --duration 00:00:10 --format speedscope
+
+# Visualize results in :
+# [A] https://www.speedscope.app/ or 
+# [B] Google Chrome's --->  chrome://tracing
+
+
+# 2. ANALYZE .NET DUMPS :
+dotnet tool install --global dotnet-symbol
+dotnet-symbol --symbols --modules --debugging <dump-file-path>
+
+# Analyze .NET dumps with : 
+# [A] lldb or dotnet-dump
+# [B] https://learn.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-symbol
 ```

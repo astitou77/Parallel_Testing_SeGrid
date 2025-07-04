@@ -1,7 +1,7 @@
 using SeleniumGridTest;
 
 [TestFixture, Parallelizable(ParallelScope.Self)]
-public class MicrosoftTest : BaseTest
+public class Test_Google : BaseTest
 {
     private TestLogger? logger;
 
@@ -13,17 +13,17 @@ public class MicrosoftTest : BaseTest
     }
 
     [Test]
-    public void VisitMicrosoft()
+    public void VisitGoogle()
     {
-        driver!.Navigate().GoToUrl("https://www.microsoft.com");
+        driver!.Navigate().GoToUrl("https://www.google.com");
         logger!.Log("Webpage title is: " + driver.Title);
-        Thread.Sleep(20000);
+        Thread.Sleep(40000); // 40 sec
     }
 
     [TearDown]
     public new void TearDown()
     {
-        logger!.Log("Microsoft's Test is closing.");
+        logger!.Log("Google's Test is closing.");
         base.TearDown();
     }
 }

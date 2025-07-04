@@ -1,7 +1,7 @@
 using SeleniumGridTest;
 
 [TestFixture, Parallelizable(ParallelScope.Self)]
-public class YouTubeTest : BaseTest
+public class Test_Youtube : BaseTest
 {
     private TestLogger? logger;
 
