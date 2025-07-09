@@ -72,6 +72,10 @@
 > dotnet new console -n <MyConsoleProj>
 > dotnet sln <MySolution.sln> add <MyConsoleProj.csproj>
 
+> dotnet sln <MySolution.sln> list
+
+> dotnet sln <MySolution.sln> remove <ProjToRemove.csproj>
+
 /MySolution
 │
 ├── MySolution.sln                 # Solution file
@@ -192,8 +196,9 @@ using MyApp.Logging;            // namespace MyApp.Logging;	   	    # var three 
 
 // [0] Import (using) package by namespace
 
-using OpenQA.Selenium;
+using System;                   // .Collections.Generic [Dictionary<TKey, TValue>]  .Linq .Threading
 using NUnit.Framework;
+using OpenQA.Selenium;          // .Chrome .Interactions .Support.UI 
 
 // [1] Give unique Namespace to project
 namespace HelloWorld;
@@ -206,62 +211,6 @@ public class Tests
     // [2] Declate Class Variables
     private String firstname;
     private String lastname;
-```
-### 3.3 NUnit[SetUp] > WebDriver
-```CS
-    // [2a] NUnit Setup prior to running a Test
-
-    [SetUp]                 // marks a METHOD to run BEFORE each test. To initialize the test context.
-    public void Setup()
-    {
-        // [2a][1] webdriver [ IWebDriver vs. RemoteWebDriver vs. ChromeWebdriver ]
-
-        var options = new ChromeOptions();
-
-        options.AddArgument("start-maximized"); 
-        options.AddArgument("--disable-gpu"); // Disable GPU acceleration
-        options.AddArgument("--no-sandbox"); // Bypass OS security model
-        options.AddArgument("--disable-dev-shm-usage"); // Overcome limited resource problems
-        options.AddArgument("--headless"); // Run in headless mode (optional)
-
-        driver = new RemoteWebDriver(
-            new Uri("http://localhost:4444/wd/hub"),
-            options.ToCapabilities(),
-            TimeSpan.FromSeconds(60));
-    }
-```
-### 3.4 NUnit[Test] > [ Locators | actions | checks ]
-```CS
-    // [2b] NUnit Test Case
-    
-    [Test]                  // <--- marks a METHOD to be run by the test runner
-    [TestCase]				// <--- marks a METHOD for multiple runs using different sets of inputs/parameters.
-    public void Test1()
-    {
-        Assert.Pass();
-        // 2.4 locators [Locate Element by...]
-        // 2.5 actions [scroll, click, input...]
-        // 2.6 checks [ Assert. ]
-
-        // iframes ; 
-        // fill form ; 
-        // click buttons ; 
-        // send keys ; 
-        // check values ; 
-        // logging info for each
-    }
-```
-### 3.5 NUnit[TearDown] > [ webdriver.quit | webdriver.dispose ]
-```CS
-    // [2c] NUnit TearDown after Test Case
-
-    [TearDown]
-    public void TearDown()
-    {
-        driver?.Quit();
-        driver?.Dispose();
-    }
-}
 ```
 
 <details closed>
@@ -290,6 +239,62 @@ public class Tests
 ```
 </details>
 
+### 3.3 NUnit[SetUp] > WebDriver
+```CS
+    // [2a] NUnit Setup prior to running a Test
+
+    [SetUp]                 // marks a METHOD to run BEFORE each test. To initialize the test context.
+    public void Setup()
+    {
+        // [2a][1] webdriver [ IWebDriver vs. RemoteWebDriver vs. ChromeWebdriver ]
+
+        var options = new ChromeOptions();
+        options.AddArgument("start-maximized");     // ex.: --disable-gpu --no-sandbox --headless
+        
+        driver = new ChromeDriver(options);         // localhost WebDriver
+        wait = new WebDriverWait(driver, TimeSpan.FromSeconds(10));
+
+        driver = new RemoteWebDriver(               // Remote WebDriver - Selenium Grid
+            new Uri("http://localhost:4444/wd/hub"),
+            options.ToCapabilities(),
+            TimeSpan.FromSeconds(60));
+    }
+```
+### 3.4 NUnit[Test] > [ Navigate | DOM Locators | actions(click, fill) | checks ]
+```CS
+    // [2b] NUnit Test Case
+    
+    [Test]                  // <--- marks a METHOD to be run by the test runner
+    [TestCase]				// <--- marks a METHOD for multiple runs using different sets of inputs/parameters.
+    public void Test1()
+    {
+        Assert.Pass();
+
+        // 2.4 locators [Locate Element by...]
+        // 2.5 actions [scroll, click, input...]
+        // 2.6 checks [ Assert. ]
+
+        // iframes ; 
+        // fill form ; 
+        // click buttons ; 
+        // send keys ; 
+        // check values ; 
+        // logging info for each
+    }
+```
+### 3.5 NUnit[TearDown] > [ webdriver.quit | webdriver.dispose ]
+```CS
+    // [2c] NUnit TearDown after Test Case
+
+    [TearDown]
+    public void TearDown()
+    {
+        driver?.Quit();
+        driver?.Dispose();
+    }
+}
+```
+
 ## 4. RUN
 
 ```bash
@@ -300,6 +305,30 @@ public class Tests
 > dotnet run                           # does not work for NUnit projects ; no main()
 > dotnet run --project MyApp
 ```
+## 5. Configure myTest.runsettings
+```xml
+<?xml version="1.0" encoding="utf-8"?>
+<RunSettings>
+
+  <RunConfiguration>
+    <TargetFrameworkVersion>net6.0</TargetFrameworkVersion>
+    <ResultsDirectory>TestResults</ResultsDirectory>
+  </RunConfiguration>
+
+  <DataCollectionRunSettings>
+    <DataCollectors>
+      <DataCollector friendlyName="Code Coverage" />
+    </DataCollectors>
+  </DataCollectionRunSettings>
+
+  <TestRunParameters>
+    <Parameter name="user1" value="password1" />
+    <Parameter name="user2" value="password2" />
+  </TestRunParameters>
+
+</RunSettings>
+```
+
 ![ADNANE](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGtnYm56NjJ5am9lMXkzcHFqdHJ0MWYyODJ5cXA1cW9hNTE5bjNrZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6Mbbs879ozZ9Yic0/giphy.gif)
 ```bash
 # list available test
@@ -307,4 +336,7 @@ public class Tests
 
 # run specific test
 > dotnet test --filter <TestName>       # VisitCanada
+
+# run specific test with specific runsettings
+> dotnet test --filter <TestName> --settings myTest.runsettings
 ```
