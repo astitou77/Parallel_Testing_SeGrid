@@ -26,7 +26,7 @@ namespace SeleniumTestDemo
         {
             // Navigation
             driver.Navigate().GoToUrl("https://example.com");
-
+            /*
             // Element Locators
             var elementById = driver.FindElement(By.Id("elementId"));
             var elementByClass = driver.FindElement(By.ClassName("className"));
@@ -71,12 +71,19 @@ namespace SeleniumTestDemo
             // Screenshot
             Screenshot screenshot = ((ITakesScreenshot)driver).GetScreenshot();
             screenshot.SaveAsFile("screenshot.png", ScreenshotImageFormat.Png);
+
+            */
         }
 
         [TearDown]
         public void TearDown()
         {
-            driver.Quit();
+            if (driver != null)
+            {
+                driver.Quit();
+                driver.Dispose();
+                // driver = null;
+            }
         }
     }
 }
