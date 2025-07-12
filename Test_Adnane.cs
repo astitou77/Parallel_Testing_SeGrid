@@ -39,6 +39,7 @@ namespace SeleniumAdvancedDemo
             */
             driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/");
             Thread.Sleep(3000); // Wait for the page to load
+            Thread.Sleep(3000); // Wait for the page to load
 
 
             /* [02] Find Elements :
@@ -84,6 +85,7 @@ namespace SeleniumAdvancedDemo
             button.Click();
             Thread.Sleep(3000); // Wait for the form to load
 
+            
 
 
             /*
@@ -134,9 +136,9 @@ namespace SeleniumAdvancedDemo
             driver.Close();
             driver.SwitchTo().Window(windows[0]);
             */
-            
 
-            
+
+
             /* [04] Assertions :
             * Assert.IsTrue(condition);
             * Assert.IsFalse(condition);

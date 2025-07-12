@@ -351,11 +351,34 @@ public class Tests
   </DataCollectionRunSettings>
 
   <TestRunParameters>
-    <Parameter name="user1" value="password1" />
-    <Parameter name="user2" value="password2" />
+    <Parameter name="outputDirectory" value="/Users/adnane/Desktop" />
+    
+    <Parameter name="herokuapp-password" value="SuperSecretPassword!" /> 
+    <!-- C# code: string password = TestContext.Parameters["herokuapp-password"]; -->
+
+    <Parameter name="herokuapp-username" value="tomsmith" /> 
+    <!-- C# code: string username = TestContext.Parameters["herokuapp-username"]; -->
   </TestRunParameters>
 
 </RunSettings>
+```
+
+```CS
+[Test]
+public void test_credentials(){
+
+  string username = TestContext.Parameters["herokuapp-username"];
+  string password = TestContext.Parameters["herokuapp-password"];
+
+  driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/login")
+
+  driver.FindElement(By.Id("username")).SendKeys(username);
+  driver.FindElement(By.Id("password")).SendKeys(password);
+
+  Thread.Timeout(50000);
+
+  driver.FindElement(By.Type("submit")).Click();
+}
 ```
 
 ![ADNANE](https://media2.giphy.com/media/v1.Y2lkPTc5MGI3NjExeGtnYm56NjJ5am9lMXkzcHFqdHJ0MWYyODJ5cXA1cW9hNTE5bjNrZCZlcD12MV9pbnRlcm5hbF9naWZfYnlfaWQmY3Q9Zw/3o6Mbbs879ozZ9Yic0/giphy.gif)
@@ -368,4 +391,8 @@ public class Tests
 
 # run specific test with specific runsettings
 > dotnet test --filter <TestName> --settings myTest.runsettings
+
+for i in range(5, 20):
+  print(i)
+  system.out.println("Adnane Stitou")
 ```
