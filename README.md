@@ -89,6 +89,7 @@
 │   ├── CalculatorTests.cs         # NUnit test class
 │   └── TestHelpers.cs             # Optional: shared test utilities
 
+> dotnet new gitignore                        # add a .NET gitignore file
 > dotnet pack	                                # Create a NuGet Package 'MySolution'
 ```
 
@@ -266,20 +267,48 @@ public class Tests
     
     [Test]                  // <--- marks a METHOD to be run by the test runner
     [TestCase]				// <--- marks a METHOD for multiple runs using different sets of inputs/parameters.
-    public void Test1()
+    public void Test_1_()
     {
-        Assert.Pass();
+        Console.WriteLine("running [Test]...");
 
-        // 2.4 locators [Locate Element by...]
-        // 2.5 actions [scroll, click, input...]
+
+        /* [01] Navigate to a site :
+        *
+        * driver.Url = "https://the-internet.herokuapp.com/";
+        * driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/");
+        * driver.Navigate().Refresh();
+        *
+        */
+        driver.Navigate().GoToUrl("https://the-internet.herokuapp.com/");
+        Thread.Sleep(3000); // Wait for the page to load
+
+
+        /* [02] Find Elements :
+        *
+        * By.Id("username");
+        * By.Name("password");
+        * By.ClassName("example");
+        * By.TagName("h2");
+        * By.LinkText("Form Authentication");
+        * By.PartialLinkText("Form");
+        * By.CssSelector("h2");
+        *
+        * By.XPath("//h2[text()='Welcome to the-internet']");
+        *
+        */
+        IWebElement formLink = driver.FindElement(By.LinkText("Form Authentication"));
+        //IWebElement button = driver.FindElement(By.XPath("//form[@id='login']"));
+        Thread.Sleep(3000);
+        
+
+
+
         // 2.6 checks [ Assert. ]
 
         // iframes ; 
-        // fill form ; 
-        // click buttons ; 
-        // send keys ; 
-        // check values ; 
         // logging info for each
+
+        Assert.Pass();
     }
 ```
 ### 3.5 NUnit[TearDown] > [ webdriver.quit | webdriver.dispose ]
