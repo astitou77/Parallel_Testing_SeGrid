@@ -3,14 +3,51 @@
 ## 1. INSTALL 
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
 
-
-
 ### 1.1 INSTALL .NET SDK
 ```bash
 > https://dotnet.microsoft.com/en-us/download       # DOWNLOAD & INSTALL .NET 8.0 (or 9.0...etc)
 > dotnet --version                                  # 8.0.410
 > dotnet --info                                     # Detailed : .NET SDK (v8.0) ; Runtime (Mac OS X) ; .NET runtimes..etc
 ```
+
+<details closed>
+<summary>.NET CLI TOOLS</summary>
+
+```bash
+# [0] Find .NET CLI Tool
+> dotnet tool list --global
+> dotnet tool search <Tool>
+
+# [1] Install .NET CLI Tool
+> dotnet tool install --global <Tool>           # installed in '~/.dotnet/tools/dotnetsay' ; set $PATH in ~/.zprofile
+> dotnet tool uninstall --global <Tool>         
+
+# [2] Use installed .NET CLI Tools
+> dotnet ildasm <MyApp.dll> -o <MyApp>.il       # or takes *.dll or *.exe ; generates MSIL language *.il 
+> dotnet-trace collect -p <PID> --duration 00:00:10 --format speedscope
+> dotnet-symbol --symbols --modules --debugging <dump-file-path>
+
+# [3] Create .NET CLI Tool
+> dotnet new tool-manifest
+> dotnet tool install dotnetsay
+> dotnet tool restore
+
+> dotnet new console -n HelloWorldCli
+> cd HelloWorldCli
+> vim HelloWorldCli.csproj
+<PropertyGroup>
+  <OutputType>Exe</OutputType>
+  <TargetFramework>net6.0</TargetFramework>
+  <PackAsTool>true</PackAsTool>
+  <ToolCommandName>helloworld</ToolCommandName>
+  <PackageOutputPath>./nupkg</PackageOutputPath>
+</PropertyGroup>
+
+> dotnet pack
+> dotnet tool install --global --add-source ./nupkg HelloWorldCli
+> helloworld
+```
+</details>
 
 ### 1.2 Base Class Library (BCL) & .NET runtime
 
@@ -21,14 +58,14 @@
 ```
 
 <details closed>
-<summary>OUTPUT</summary>
+<summary>.NET RUNTIME</summary>
 
 ```bash
     Microsoft.NETCore.App 8.0.16    [/usr/local/share/dotnet/shared/Microsoft.NETCore.App]
 
-        System.Private.CoreLib.dll
-        System.Runtime.dll
-        System.Console.dll
+        System.Private.CoreLib.dll                # Use Intermediate Language Disassembler [ILDASM] tool to view  
+        System.Runtime.dll                        # > ildasm MyApp.exe /output:MyApp.il
+        System.Console.dll                        # > ilasm MyApp.il
         System.Collections.dll
         System.Linq.dll
         System.Net.Http.dll
@@ -89,8 +126,8 @@
 │   ├── CalculatorTests.cs         # NUnit test class
 │   └── TestHelpers.cs             # Optional: shared test utilities
 
-> dotnet new gitignore                        # add a .NET gitignore file
-> dotnet pack	                                # Create a NuGet Package 'MySolution'
+> dotnet new gitignore
+> dotnet pack	                     # Create NuGet Package 'MySolution'
 ```
 
 <details closed>

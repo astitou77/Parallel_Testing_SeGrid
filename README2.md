@@ -23,22 +23,6 @@ dotnet-symbol --symbols --modules --debugging <dump-file-path>
 # [B] https://learn.microsoft.com/en-us/dotnet/core/diagnostics/dotnet-symbol
 ```
 
-
-### 5.1 CLI TOOLS
-
-```bash
-# [0] Find .NET CLI Tool
-
-# [1] Install .NET CLI Tool
-> dotnet tool install --global dotnetsay
-> dotnet tool list --global
-> dotnet tool uninstall --global dotnetsay
-
-> dotnet new tool-manifest
-> dotnet tool install dotnetsay
-> dotnet tool restore
-```
-
 Here's a fact[^1]
 [^1]: This is the footnote.
 

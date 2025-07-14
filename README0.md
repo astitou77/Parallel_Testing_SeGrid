@@ -19,3 +19,15 @@ Assemblies : *.dll ---> Read in Disassembler ex.:
 
 ##
 class, record, struct, record class, record struct
+
+```CS
+// Base (Super) Class > Class
+
+
+// Record Class
+
+
+// Struct Class
+
+```
+
