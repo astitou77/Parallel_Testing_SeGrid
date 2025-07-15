@@ -19,10 +19,11 @@
 > dotnet tool search <Tool>
 
 # [1] Install .NET CLI Tool
-> dotnet tool install --global <Tool>           # installed in '~/.dotnet/tools/dotnetsay' ; set $PATH in ~/.zprofile
+> dotnet tool install --global <Tool>           # install in '~/.dotnet/tools/dotnet-script' ; set $PATH in ~/.zprofile
 > dotnet tool uninstall --global <Tool>         
 
 # [2] Use installed .NET CLI Tools
+> dotnet-script <myScript>.cs
 > dotnet ildasm <MyApp.dll> -o <MyApp>.il       # or takes *.dll or *.exe ; generates MSIL language *.il 
 > dotnet-trace collect -p <PID> --duration 00:00:10 --format speedscope
 > dotnet-symbol --symbols --modules --debugging <dump-file-path>
