@@ -2,7 +2,7 @@
 
 ## 1. INSTALL 
 ![Build](https://img.shields.io/badge/build-passing-brightgreen)
-
+![ADNANE](Selenium_Grid_Parallel_Testing-01.jpg)
 ### 1.1 INSTALL .NET SDK
 ```bash
 > https://dotnet.microsoft.com/en-us/download       # DOWNLOAD & INSTALL .NET 8.0 (or 9.0...etc)
